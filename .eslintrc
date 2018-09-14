@@ -1,0 +1,29 @@
+{
+    "parser": "babel-eslint",
+    "extends": "airbnb",
+    "rules": {
+        "import/first": 0,
+        "import/no-named-default": 0,
+        "arrow-body-style": 0,
+        "indent": ["error", 4],
+        "no-shadow": 0,
+        "react/jsx-indent": [2, 4],
+        "react/jsx-filename-extension": 0,
+        "react/forbid-prop-types": 0,
+        "react/jsx-indent-props": [2, 4],
+        "react/prefer-stateless-function": 0,
+        "import/no-named-as-default-member": 0,
+        "import/no-named-as-default": 0,
+        "import/no-extraneous-dependencies": ["error", {
+            "devDependencies": true
+        }],
+        "no-unused-expressions": 0,
+        "linebreak-style": 0
+    },
+    "globals": {
+        "document": false,
+        "fetch": false,
+        "navigator": false,
+        "window": false
+    }
+}
