@@ -67,7 +67,7 @@ class App extends Component {
                     <div className="container main-layout__rates">
                         {
                             isLoading
-                                ? <h2> ...IsLoading </h2>
+                                ? <h2 className="grey-text"> ...IsLoading </h2>
                                 : (<RatesTable
                                     {...{
                                         ascendingSort,

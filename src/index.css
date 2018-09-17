@@ -18,6 +18,10 @@
    margin-right: auto;
  }
 
+ .main-layout__rates {
+   min-width: 300px;
+ }
+
  td {
    border: 1px solid black;
    min-width: 100px;
@@ -56,4 +60,8 @@
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
-}
+  }
+
+  .grey-text {
+    color: #eeeeee;
+  }
