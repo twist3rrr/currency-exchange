@@ -7,6 +7,7 @@ import { CURRECIES } from './constants';
 
 import { getToday } from './utilities';
 
+import RatesTable from './components/RatesTable';
 import UserSelection from './components/UserSelection';
 
 class App extends Component {
@@ -61,6 +62,11 @@ class App extends Component {
                                 defaultStateHandler: this.defaultStateHandler,
                             }}
                         />
+                        {
+                            isLoading
+                                ? <h2> ...IsLoading </h2>
+                                : <RatesTable {...{ exchangeRates }} />
+                        }
                     </div>
                 </div>
             </React.Fragment>
