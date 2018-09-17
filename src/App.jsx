@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addCounter, subtractCounter } from './ac/counter';
 import fetchRates from './ac/rates';
 
 import { CURRECIES } from './constants';
@@ -16,15 +15,28 @@ class App extends Component {
         this.state = {
             currency: CURRECIES.EUR,
             date: getToday(),
+            ascendingSort: true,
         };
 
+        this.changeSortType = this.changeSortType.bind(this);
         this.defaultStateHandler = this.defaultStateHandler.bind(this);
+        this.fetchUserInputRates = this.fetchUserInputRates.bind(this);
     }
 
     componentDidMount() {
+        this.fetchUserInputRates();
+    }
+
+    fetchUserInputRates() {
         const { currency, date } = this.state;
         const { fetchRates } = this.props;
         fetchRates({ currency, date });
+    }
+
+    changeSortType() {
+        this.setState(prevState => ({
+            ascendingSort: !prevState.ascendingSort,
+        }));
     }
 
     defaultStateHandler(propName, value, next) {
@@ -35,37 +47,40 @@ class App extends Component {
 
     render() {
         const {
-            addCounter,
-            counter,
             exchangeRates,
             error,
             isLoading,
-            subtractCounter,
         } = this.props;
 
-        const { currency, date } = this.state;
+        const { ascendingSort, currency, date } = this.state;
 
         return (
             <React.Fragment>
-                <h2>Exchange rates</h2>
-                <div>
-                    <div>
-                        <div>
-                            <h1>{counter}</h1>
-                            <button type="button" onClick={addCounter}>+</button>
-                            <button type="button" onClick={subtractCounter}>-</button>
-                        </div>
+                <h2 className="align-center">Exchange rates</h2>
+                { error && <h2>{error}</h2> }
+                <div className="container main-layout">
+                    <div className="container main-layout__sidebar">
                         <UserSelection
                             {...{
                                 currency,
                                 date,
                                 defaultStateHandler: this.defaultStateHandler,
+                                fetchUserInputRates: this.fetchUserInputRates,
                             }}
                         />
+                    </div>
+                    <div className="container main-layout__rates">
                         {
                             isLoading
                                 ? <h2> ...IsLoading </h2>
-                                : <RatesTable {...{ exchangeRates }} />
+                                : (<RatesTable
+                                    {...{
+                                        ascendingSort,
+                                        changeSortType:
+                                        this.changeSortType,
+                                        exchangeRates,
+                                    }}
+                                />)
                         }
                     </div>
                 </div>
@@ -75,17 +90,14 @@ class App extends Component {
 }
 
 export default connect((state) => {
-    const { counter, rates } = state;
+    const { rates } = state;
     const { isLoading, error, exchangeRates } = rates;
 
     return {
-        counter,
         exchangeRates,
         error,
         isLoading,
     };
 }, {
-    addCounter,
     fetchRates,
-    subtractCounter,
 })(App);

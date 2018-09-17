@@ -1,15 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { BUY_SELL_RATE, CURRECIES } from '../constants';
+
 const RatesTable = (props) => {
-    const { exchangeRates } = props;
+    const { ascendingSort, changeSortType, exchangeRates } = props;
+    const listOfCurrecies = Object.values(CURRECIES);
+
+    const cortedList = Object.keys(exchangeRates).sort((a, b) => {
+        return ascendingSort
+            ? a.localeCompare(b)
+            : b.localeCompare(a);
+    });
 
     const renderRoutes = () => {
-        return Object.keys(exchangeRates).map(key => (
-            <tr {...{ key }}>
+        return cortedList.map(key => (
+            <tr {...{ key }} className={listOfCurrecies.includes(key) && 'highlight'}>
                 <td>{key}</td>
-                <td>{(exchangeRates[key] * 0.95).toFixed(4)}</td>
-                <td>{(exchangeRates[key] * 1.05).toFixed(4)}</td>
+                <td>{(exchangeRates[key] * (1 - BUY_SELL_RATE)).toFixed(4)}</td>
+                <td>{(exchangeRates[key] * (1 + BUY_SELL_RATE)).toFixed(4)}</td>
             </tr>
         ));
     };
@@ -18,7 +27,12 @@ const RatesTable = (props) => {
         <table>
             <thead>
                 <tr>
-                    <td>Currency</td>
+                    <td
+                        className="cursor-pointer"
+                        onClick={changeSortType}
+                    >
+                        Currency
+                    </td>
                     <td>Buy</td>
                     <td>Sell</td>
                 </tr>
@@ -31,6 +45,8 @@ const RatesTable = (props) => {
 };
 
 RatesTable.propTypes = {
+    ascendingSort: PropTypes.bool.isRequired,
+    changeSortType: PropTypes.func.isRequired,
     exchangeRates: PropTypes.object.isRequired,
 };
 

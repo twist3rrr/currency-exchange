@@ -6,3 +6,40 @@
    width: 300px;
    padding: 5px;
  }
+
+ .align-center {
+   text-align: center;
+ }
+
+ .main-layout {
+   display: flex;
+   justify-content: center;
+   margin-left: auto;
+   margin-right: auto;
+ }
+
+ td {
+   border: 1px solid black;
+   width: 100px;
+ }
+
+ tr:nth-child(even) {
+   background-color: #eee;
+ }
+
+ thead {
+   background-color: #2188b6;
+ }
+
+ table {
+   border-spacing: 0;
+   border: 1px solid black;
+ }
+
+ .cursor-pointer {
+  cursor: pointer;
+ }
+
+ .highlight {
+   background-color: #fcd998;
+ }

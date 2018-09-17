@@ -4,7 +4,7 @@ import { AC, AC_STATE, EXCHANGE_API_URL } from '../constants';
 
 export default ({ currency, date }) => {
     const { FAILURE, SUCCESS } = AC_STATE;
-    const { FETCH_RATES } = AC;
+    const { FETCH_RATES, IS_LOADING } = AC;
 
     return (dispatch) => {
         const fetchUrl = url.format({
@@ -13,6 +13,13 @@ export default ({ currency, date }) => {
             pathname: date,
             query: {
                 base: currency,
+            },
+        });
+
+        dispatch({
+            type: IS_LOADING,
+            payload: {
+                isLoading: true,
             },
         });
 
@@ -28,11 +35,10 @@ export default ({ currency, date }) => {
                 },
             });
         }).catch((err) => {
-            const { status, statusText } = err.response;
             dispatch({
                 type: FETCH_RATES + FAILURE,
                 payload: {
-                    error: `Status: ${status}, Message: ${statusText}`,
+                    error: err,
                     isLoading: false,
                 },
             });

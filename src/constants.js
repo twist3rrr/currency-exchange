@@ -19,4 +19,6 @@ export const CURRECIES = {
     JPY: 'JPY',
 };
 
+export const BUY_SELL_RATE = 0.05;
+
 export const EXCHANGE_API_URL = 'api.exchangeratesapi.io';

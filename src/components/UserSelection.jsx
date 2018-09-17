@@ -4,7 +4,12 @@ import PropTypes from 'prop-types';
 import { CURRECIES } from '../constants';
 
 const UserSelection = (props) => {
-    const { currency, date, defaultStateHandler } = props;
+    const {
+        currency,
+        date,
+        defaultStateHandler,
+        fetchUserInputRates,
+    } = props;
     const listOfCurrecies = Object.values(CURRECIES);
 
     return (
@@ -13,13 +18,13 @@ const UserSelection = (props) => {
                 <span className="input-wrapper__label">BASE: </span>
                 <select
                     className="input-wrapper__element"
+                    value={currency}
+                    onChange={e => defaultStateHandler('currency', e.target.value)}
                 >
                     {listOfCurrecies.map((currencyItem) => {
                         return (
                             <option
-                                checked={(currency === currencyItem)}
                                 key={currencyItem}
-                                onClick={() => defaultStateHandler('currency', currencyItem)}
                             >
                                 {currencyItem}
                             </option>
@@ -36,6 +41,14 @@ const UserSelection = (props) => {
                     value={date}
                 />
             </div>
+            <div className="input-wrapper">
+                <button
+                    type="button"
+                    onClick={fetchUserInputRates}
+                >
+                    Display
+                </button>
+            </div>
         </div>
     );
 };
@@ -44,6 +57,7 @@ UserSelection.propTypes = {
     currency: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
     defaultStateHandler: PropTypes.func.isRequired,
+    fetchUserInputRates: PropTypes.func.isRequired,
 };
 
 export default UserSelection;

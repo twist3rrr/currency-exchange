@@ -8,7 +8,7 @@ const initialState = {
 
 const rates = (state = initialState, action) => {
     const { FAILURE, SUCCESS } = AC_STATE;
-    const { FETCH_RATES } = AC;
+    const { FETCH_RATES, IS_LOADING } = AC;
 
     const { payload, type } = action;
 
@@ -16,6 +16,7 @@ const rates = (state = initialState, action) => {
     case FETCH_RATES + SUCCESS:
         return {
             ...state,
+            error: null,
             exchangeRates: payload.exchangeRates,
             isLoading: payload.isLoading,
         };
@@ -23,6 +24,11 @@ const rates = (state = initialState, action) => {
         return {
             ...state,
             error: payload.error,
+            isLoading: payload.isLoading,
+        };
+    case IS_LOADING:
+        return {
+            ...state,
             isLoading: payload.isLoading,
         };
     default:
