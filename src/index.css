@@ -3,8 +3,18 @@
  }
 
  .input-wrapper {
-   width: 300px;
+   display: flex;
+   justify-content:  flex-end;
+   width: 250px;
    padding: 5px;
+   padding-right: 30px;
+ }
+
+ .input-wrapper input,
+ .input-wrapper select,
+ .input-wrapper button {
+    width: 135px;
+    margin-left: 30px;
  }
 
  .align-center {
