@@ -1,45 +1,40 @@
 import React, { Component } from 'react';
+// Redux
 import { connect } from 'react-redux';
-import fetchRates from './ac/rates';
-
-import { CURRECIES } from './constants';
-
-import { getToday } from './utilities';
-
+// Components
 import RatesTable from './components/RatesTable';
 import UserSelection from './components/UserSelection';
+// Actions
+import fetchRates from './ac/rates';
+// Constants
+import { CURRECIES } from './constants';
+// Utilities
+import getToday from './utilities';
 
 class App extends Component {
-    constructor() {
-        super();
-        this.state = {
-            currency: CURRECIES.EUR,
-            date: getToday(),
-            ascendingSort: true,
-        };
-
-        this.changeSortType = this.changeSortType.bind(this);
-        this.defaultStateHandler = this.defaultStateHandler.bind(this);
-        this.fetchUserInputRates = this.fetchUserInputRates.bind(this);
-    }
+    state = {
+        ascendingSort: true,
+        currency: CURRECIES[0],
+        date: getToday(),
+    };
 
     componentDidMount() {
         this.fetchUserInputRates();
     }
 
-    fetchUserInputRates() {
+    fetchUserInputRates = () => {
         const { currency, date } = this.state;
         const { fetchRates } = this.props;
         fetchRates({ currency, date });
     }
 
-    changeSortType() {
+    changeSortType = () => {
         this.setState(prevState => ({
             ascendingSort: !prevState.ascendingSort,
         }));
     }
 
-    defaultStateHandler(propName, value, next) {
+    defaultStateHandler = (propName, value, next) => {
         this.setState({
             [propName]: value,
         }, next);
@@ -76,8 +71,7 @@ class App extends Component {
                                 : (<RatesTable
                                     {...{
                                         ascendingSort,
-                                        changeSortType:
-                                        this.changeSortType,
+                                        changeSortType: this.changeSortType,
                                         exchangeRates,
                                     }}
                                 />)

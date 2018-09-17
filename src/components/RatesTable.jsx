@@ -1,21 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+// Constants
 import { BUY_SELL_RATE, CURRECIES } from '../constants';
 
 const RatesTable = (props) => {
     const { ascendingSort, changeSortType, exchangeRates } = props;
-    const listOfCurrecies = Object.values(CURRECIES);
 
-    const cortedList = Object.keys(exchangeRates).sort((a, b) => {
+    const sortedList = Object.keys(exchangeRates).sort((a, b) => {
         return ascendingSort
             ? a.localeCompare(b)
             : b.localeCompare(a);
     });
 
     const renderRoutes = () => {
-        return cortedList.map(key => (
-            <tr {...{ key }} className={listOfCurrecies.includes(key) && 'highlight'}>
+        return sortedList.map(key => (
+            <tr {...{ key }} className={CURRECIES.includes(key) ? 'highlight' : null}>
                 <td>{key}</td>
                 <td>{(exchangeRates[key] * (1 - BUY_SELL_RATE)).toFixed(4)}</td>
                 <td>{(exchangeRates[key] * (1 + BUY_SELL_RATE)).toFixed(4)}</td>
@@ -28,10 +27,10 @@ const RatesTable = (props) => {
             <thead>
                 <tr>
                     <td
-                        className="cursor-pointer"
+                        className="cursor-pointer noselect"
                         onClick={changeSortType}
                     >
-                        Currency
+                        Currency ⇅
                     </td>
                     <td>Buy</td>
                     <td>Sell</td>

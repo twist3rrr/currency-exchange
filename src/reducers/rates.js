@@ -1,5 +1,6 @@
+// Constants
 import { AC, AC_STATE } from '../constants';
-
+// Initial state
 const initialState = {
     error: null,
     isLoading: true,

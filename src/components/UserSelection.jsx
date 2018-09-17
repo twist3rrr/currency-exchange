@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+// Constants
 import { CURRECIES } from '../constants';
 
 const UserSelection = (props) => {
@@ -10,7 +10,6 @@ const UserSelection = (props) => {
         defaultStateHandler,
         fetchUserInputRates,
     } = props;
-    const listOfCurrecies = Object.values(CURRECIES);
 
     return (
         <div>
@@ -21,7 +20,7 @@ const UserSelection = (props) => {
                     value={currency}
                     onChange={e => defaultStateHandler('currency', e.target.value)}
                 >
-                    {listOfCurrecies.map((currencyItem) => {
+                    {CURRECIES.map((currencyItem) => {
                         return (
                             <option
                                 key={currencyItem}

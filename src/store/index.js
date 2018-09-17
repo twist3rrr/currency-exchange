@@ -1,6 +1,9 @@
+// Redux
 import { createStore, applyMiddleware } from 'redux';
-import logger from 'redux-logger';
 import thunk from 'redux-thunk';
+// Logger
+import logger from 'redux-logger';
+// Root reducer
 import reducer from '../reducers';
 
 const enhancer = applyMiddleware(
