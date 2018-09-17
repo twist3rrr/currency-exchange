@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addCounter, subtractCounter } from './ac/counter';
+import fetchRates from './ac/rates';
 
 import { CURRECIES } from './constants';
+
+import { getToday } from './utilities';
 
 import UserSelection from './components/UserSelection';
 
@@ -11,10 +14,16 @@ class App extends Component {
         super();
         this.state = {
             currency: CURRECIES.EUR,
-            date: '',
+            date: getToday(),
         };
 
         this.defaultStateHandler = this.defaultStateHandler.bind(this);
+    }
+
+    componentDidMount() {
+        const { currency, date } = this.state;
+        const { fetchRates } = this.props;
+        fetchRates({ currency, date });
     }
 
     defaultStateHandler(propName, value, next) {
@@ -25,8 +34,11 @@ class App extends Component {
 
     render() {
         const {
-            counter,
             addCounter,
+            counter,
+            exchangeRates,
+            error,
+            isLoading,
             subtractCounter,
         } = this.props;
 
@@ -57,10 +69,17 @@ class App extends Component {
 }
 
 export default connect((state) => {
-    const { counter } = state;
+    const { counter, rates } = state;
+    const { isLoading, error, exchangeRates } = rates;
 
-    return { counter };
+    return {
+        counter,
+        exchangeRates,
+        error,
+        isLoading,
+    };
 }, {
     addCounter,
+    fetchRates,
     subtractCounter,
 })(App);
